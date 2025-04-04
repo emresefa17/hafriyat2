@@ -58,17 +58,36 @@
     
 
     <div class="hero">
-        <video id="heroVideo" autoplay muted loop>
+        <video id="heroVideo" autoplay muted loop playsinline preload="auto">
             <source src="output-video.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
         <div class="hero-content">
             <h1>Saruhan Hafriyat </h1>
             <p>Hafriyat, Forklift Yükleme & Alt Yapı Hizmetleri</p>
-           
         </div>
     </div>
 
+    <script>
+        // Video yükleme yönetimi
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.getElementById('heroVideo');
+            
+            // Video yüklendiğinde
+            video.addEventListener('loadeddata', function() {
+                video.play().catch(function(error) {
+                    console.log("Video otomatik oynatma hatası:", error);
+                });
+            });
+
+            // Video yüklenemezse
+            video.addEventListener('error', function() {
+                video.style.display = 'none';
+                const heroSection = document.querySelector('.hero');
+                heroSection.style.backgroundColor = '#000'; // Yedek arka plan
+            });
+        });
+    </script>
     <section id="hizmetler" class="services">
         <div class="container">
             <h2>Hizmetlerimiz</h2>
