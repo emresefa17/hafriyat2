@@ -58,7 +58,12 @@
     
 
     <div class="hero">
-        <video id="heroVideo" autoplay muted loop playsinline preload="auto">
+        <!-- Video yüklenene kadar gösterilecek loading ekranı -->
+        <div id="loading-screen" style="position: absolute; width: 100%; height: 100%; background: #000; display: flex; justify-content: center; align-items: center; z-index: 2;">
+            <div style="color: white; font-size: 24px;">Yükleniyor...</div>
+        </div>
+        
+        <video id="heroVideo" autoplay muted loop playsinline preload="metadata" style="opacity: 0; transition: opacity 0.5s;">
             <source src="output-video.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
@@ -69,23 +74,27 @@
     </div>
 
     <script>
-        // Video yükleme yönetimi
         document.addEventListener('DOMContentLoaded', function() {
             const video = document.getElementById('heroVideo');
+            const loadingScreen = document.getElementById('loading-screen');
             
             // Video yüklendiğinde
             video.addEventListener('loadeddata', function() {
+                // Loading ekranını kaldır ve videoyu göster
+                loadingScreen.style.display = 'none';
+                video.style.opacity = '1';
                 video.play().catch(function(error) {
                     console.log("Video otomatik oynatma hatası:", error);
                 });
             });
 
-            // Video yüklenemezse
-            video.addEventListener('error', function() {
-                video.style.display = 'none';
-                const heroSection = document.querySelector('.hero');
-                heroSection.style.backgroundColor = '#000'; // Yedek arka plan
-            });
+            // 5 saniye içinde video yüklenmezse
+            setTimeout(() => {
+                if (loadingScreen.style.display !== 'none') {
+                    loadingScreen.style.display = 'none';
+                    video.style.opacity = '1';
+                }
+            }, 5000);
         });
     </script>
     <section id="hizmetler" class="services">
