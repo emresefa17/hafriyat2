@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saruhan Harfiyat</title>
+    <link rel="icon" href="SARUHANLOGOrevize.png" type="image/png">
+    <link rel="shortcut icon" href="SARUHANLOGOrevize.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+</head>
+<body>
+    <header id="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="SARUHANLOGOrevize.png" alt="Harfiyat & İnşaat Logo" class="logo-img">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#hizmetler">Hizmetlerimiz</a></li>
+                    <li><a href="#galerimiz">Galerimiz</a></li>
+                    <li><a href="#neler">Neler Yapıyoruz</a></li>
+                    <li><a href="#iletişim">İletişim</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <script>
+        let lastScrollY = window.scrollY;
+        const navbar = document.getElementById("navbar");
+    
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > lastScrollY) {
+                // Aşağı kayınca navbar gizlensin
+                navbar.style.top = "-80px";
+            } else {
+                // Yukarı kayınca navbar görünsün
+                navbar.style.top = "0";
+            }
+            lastScrollY = window.scrollY;
+        });
+    
+        // Fare navbar üzerine gelince görünür yap
+        navbar.addEventListener("mouseenter", () => {
+            navbar.style.top = "0";
+        });
+    
+        // Fare navbar dışına çıkınca tekrar gizle (eğer aşağı kaydırılmışsa)
+        navbar.addEventListener("mouseleave", () => {
+            if (window.scrollY > 50) {
+                navbar.style.top = "-80px";
+            }
+        });
+    </script>
+    
+
+    <div class="hero">
+        <video id="heroVideo" autoplay muted loop>
+            <source src="output-video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-content">
+            <h1>Saruhan Hafriyat </h1>
+            <p>Profesyonel İnşaat ve Hafriyat Hizmetleri</p>
+           
+        </div>
+    </div>
+
+    <section id="hizmetler" class="services">
+        <div class="container">
+            <h2>Hizmetlerimiz</h2>
+            <p class="services-subtitle">En hesaplı ve ekonomik fiyatlardan hizmet sunmaktayız.</p>
+            <div class="service-grid">
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="galeri/galeri3.jpg" alt="Bina Yıkımı">
+                    </div>
+                    
+                    <h3>Teleskopik Forklift Kiralama</h3>
+                    <p>İhtiyacınıza uygun forklift seçenekleriyle güvenilir ve hızlı hizmet sunuyoruz.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="galeri/galeri1.jpg" alt="Apartman Kapı Tamiri">
+                    </div>
+                    
+                    <h3>Hafriyat</h3>
+                    <p>Profesyonel ekip ve modern ekipmanlarla kazı ve hafriyat işlemleri yapıyoruz.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="galeri/galeri18.jpg" alt="Demo Hizmet 4">
+                    </div>
+                    
+                    <h3>Altyapı Hizmetleri</h3>
+                    <p>Şehir planlaması ve altyapı çalışmalarında profesyonel çözümler sunuyoruz.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="galeri/galeri20.jpg" alt="7/24 ULAŞIM ve HİZMET">
+                    </div>
+                    
+                    <h3>7/24 Ulaşım ve Hizmet</h3>
+                    <p>Günün her saati hizmet vererek ihtiyaçlarınıza anında çözüm sağlıyoruz.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+   
+       
+
+    <section id="galerimiz" class="gallery">
+        <div class="container">
+            <h2>Galerimiz</h2>
+            <div class="gallery-container" id="gallery-container">
+                <!-- JavaScript buraya resimleri ekleyecek -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- Modal Slider -->
+    <div id="lightbox" class="lightbox">
+        <span class="close">&times;</span>
+        <img id="lightbox-img" class="lightbox-img" src="" alt="Galeri Resmi">
+        <div class="prev" id="prev">&#10094;</div>
+        <div class="next" id="next">&#10095;</div>
+    </div>
+    
+    <style>
+        .gallery-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+    
+        .gallery-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+        }
+    
+        .gallery-item.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    
+        .gallery-item img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+        }
+    
+        /* Lightbox (Büyütülmüş Resim) */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+    
+        .lightbox-img {
+            max-width: 80%;
+            max-height: 80%;
+            border-radius: 12px;
+        }
+    
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+        }
+    
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            font-size: 50px;
+            color: white;
+            cursor: pointer;
+            user-select: none;
+            padding: 10px;
+        }
+    
+        .prev { left: 10%; }
+        .next { right: 10%; }
+    
+        .prev:hover, .next:hover, .close:hover {
+            color: #60FFCA;
+        }
+    </style>
+    
+    <script>
+        const galleryContainer = document.getElementById("gallery-container");
+        const imageCount = 30;
+        const imagePath = "galeri/";
+        let currentIndex = 0;
+        let images = [];
+    
+        // Resimleri ekleyip listeye al
+        for (let i = 1; i <= imageCount; i++) {
+            setTimeout(() => {
+                const imgElement = document.createElement("img");
+                imgElement.src = `${imagePath}galeri${i}.jpg`;
+                imgElement.alt = `Galeri Resmi ${i}`;
+                imgElement.dataset.index = i - 1;
+    
+                const galleryItem = document.createElement("div");
+                galleryItem.classList.add("gallery-item");
+                galleryItem.appendChild(imgElement);
+                galleryContainer.appendChild(galleryItem);
+    
+                images.push(imgElement.src);
+    
+                imgElement.addEventListener("click", () => openLightbox(i - 1));
+    
+                setTimeout(() => {
+                    galleryItem.classList.add("show");
+                }, 100);
+            }, i * 250);
+        }
+    
+        // Lightbox İşlemleri
+        const lightbox = document.getElementById("lightbox");
+        const lightboxImg = document.getElementById("lightbox-img");
+        const closeBtn = document.querySelector(".close");
+        const prevBtn = document.getElementById("prev");
+        const nextBtn = document.getElementById("next");
+    
+        function openLightbox(index) {
+            currentIndex = index;
+            lightbox.style.display = "flex";
+            lightboxImg.src = images[currentIndex];
+        }
+    
+        function closeLightbox() {
+            lightbox.style.display = "none";
+        }
+    
+        function showPrev() {
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
+            lightboxImg.src = images[currentIndex];
+        }
+    
+        function showNext() {
+            currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
+            lightboxImg.src = images[currentIndex];
+        }
+    
+        closeBtn.addEventListener("click", closeLightbox);
+        prevBtn.addEventListener("click", showPrev);
+        nextBtn.addEventListener("click", showNext);
+    
+        // Klavye ile kontrol (Sol-sağ oklar ve ESC)
+        document.addEventListener("keydown", (e) => {
+            if (lightbox.style.display === "flex") {
+                if (e.key === "ArrowLeft") showPrev();
+                if (e.key === "ArrowRight") showNext();
+                if (e.key === "Escape") closeLightbox();
+            }
+        });
+    
+        // Lightbox dışına tıklayınca kapat
+        lightbox.addEventListener("click", (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+    </script>
+    
+
+    <div class="hero-section" id="neler">
+        <div class="container">
+            <h1>NELER YAPIYORUZ?</h1>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="icon">🏗️</div>
+                    <h3>Toprak Kazımı ve İnşaat</h3>
+                    <p>İnşaat sahasında yer alan toprak, kaya ve diğer malzemelerin kazılması ve taşınması sürecini içerir.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">🛠️</div>
+                    <h3>Zemin Düzeltilmesi</h3>
+                    <p>İnşaat sahasındaki zeminin uygun bir şekilde düzeltilmesi ve sıkıştırılması işlemidir.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">🏠</div>
+                    <h3>Temel Kazıları</h3>
+                    <p>Yeni bina inşaatları için gerekli olan temel kazıları, harfiyat işlerinin önemli bir parçasını oluşturur. Doğru temel kazıları, yapıların dayanıklılığını sağlar.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">🚰</div>
+                    <h3>Kanalizasyon Sistemleri</h3>
+                    <p>Şehir altyapısının vazgeçilmez bir parçası olan kanalizasyon sistemlerinin planlaması, kurulumu ve bakımını üstleniyoruz.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">💧</div>
+                    <h3>Su ve Atık İşlemleri</h3>
+                    <p>Temiz su temini, atık su arıtma ve su ile ilgili diğer altyapı projelerinde uzmanlığımızla, su kaynaklarının etkin ve sürdürülebilir bir şekilde yönetilmesine destek oluruz.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">🌧️</div>
+                    <h3>Yağmur Suyu Drenaj Sistemleri</h3>
+                    <p>Yağmur suyu yönetimi, şehir planlamasının önemli bir parçasıdır. Yağmur suyu drenaj sistemlerinin tasarımı ve uygulamasında uzmanlık sunarak, su baskınlarına karşı koruma sağlıyoruz.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">⚡</div>
+                    <h3>Yeraltı Altyapı Tesisleri</h3>
+                    <p>Elektrik, telekomünikasyon, doğalgaz gibi yeraltı altyapı tesislerinin planlanması ve inşası konusundaki uzmanlığımızla, şehirlerin modern ihtiyaçlarına uygun altyapı sistemleri oluşturuyoruz.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="iletişim">
+        <div class="container">
+            <h2 class="footer-title">Bize Ulaşın</h2>
+            <div class="footer-content" style="display: flex; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
+                <div class="contact-info" style="flex: 1; text-align: left; font-size: 18px; font-weight: bold;">
+                    <p><strong>İletişim:</strong> 0540 880 17 17</p>
+                    <p><strong>İletişim:</strong> 0542 231 27 21
+                    <p><strong>Adres:</strong> Çanakkale Yolu 1.Km,Karabiga Kavşağı,Biga</p>
+                </div>
+                <div class="map" style="flex: 2;">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509367!2d28.8834!3d40.2275!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cabae4d1234567%3A0x123456789abcdef!2sÖrnek+Mah.+No%3A+123%2C+Biga%2C+Türkiye!5e0!3m2!1str!2str!4v1700000000000"
+                        width="100%" height="500" style="border:0; border-radius: 10px;" allowfullscreen="" loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+           
+        </div>
+    </footer>
+    
+    
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.projectsSwiper', {
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            loop: true,
+            autoplay: {
+                delay: 5000,
+            },
+        });
+
+        const video = document.getElementById('heroVideo');
+
+        video.onerror = function() {
+            // Video yüklenemediğinde kullanıcıya bir mesaj göster
+            const message = document.createElement('div');
+            message.style.position = 'absolute';
+            message.style.top = '50%';
+            message.style.left = '50%';
+            message.style.transform = 'translate(-50%, -50%)';
+            message.style.color = '#fff';
+            message.style.fontSize = '2em';
+            message.style.textAlign = 'center';
+            message.innerHTML = 'Video yüklenemedi. Lütfen daha sonra tekrar deneyin.';
+            document.body.appendChild(message);
+        };
+    </script>
+</body>
+</html>
+<style>
+    /* Navbar Responsive Styles */
+    @media screen and (max-width: 768px) {
+        .container {
+            padding: 0 15px;
+        }
+        
+        #navbar .container {
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .logo {
+            margin-bottom: 10px;
+        }
+
+        .logo-img {
+            max-height: 50px;
+            width: auto;
+        }
+
+        nav ul {
+            flex-direction: column;
+            text-align: center;
+            gap: 10px;
+        }
+
+        nav ul li {
+            margin: 5px 0;
+        }
+    }
+
+    /* Services Responsive Styles */
+    @media screen and (max-width: 768px) {
+        .service-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .service-card {
+            margin: 0 10px;
+        }
+    }
+
+    /* Features Grid Responsive */
+    @media screen and (max-width: 768px) {
+        .features-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+            padding: 15px;
+        }
+
+        .feature-card {
+            margin: 0 10px;
+        }
+    }
+
+    /* Footer Responsive */
+    @media screen and (max-width: 768px) {
+        .footer-content {
+            flex-direction: column;
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .map {
+            width: 100%;
+        }
+
+        iframe {
+            height: 300px;
+        }
+    }
+
+    /* Hero Content Responsive */
+    @media screen and (max-width: 768px) {
+        .hero-content h1 {
+            font-size: 2em;
+        }
+
+        .hero-content p {
+            font-size: 1em;
+        }
+    }
+
+    /* Gallery Responsive */
+    @media screen and (max-width: 768px) {
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+        }
+
+        .lightbox-img {
+            width: 90%;
+            height: auto;
+        }
+
+        .prev { left: 5%; }
+        .next { right: 5%; }
+    }
+</style>
